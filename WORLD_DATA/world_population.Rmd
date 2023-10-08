@@ -86,7 +86,36 @@ head(world_data)
 world_data <- world_data %>% 
   mutate(continent = countrycode(world_data$Country, origin = "country.name", destination = "continent"))
 
-
 file_path <- paste0(getwd(), "/CLEAN_WORLD_POPULATION_DATA.csv")
 write.csv(world_data, file = file_path)
+
+total_population_by_continent <- world_data %>%
+  group_by(continent) %>%
+  summarise(Total_Population = sum(population_2020))
+
+total_population_by_continent <- na.omit(total_population_by_continent)
+
+file_path_continent_pop <- paste0(getwd(), "/Pop_by_continent.csv")
+write.csv(total_population_by_continent, file = file_path_continent_pop)
+
 ```
+
+
+
+
+```{r}
+time_series_data <- read.csv("world_population_2.csv")
+
+head(time_series_data, n = 10)
+
+population_by_continent <- time_series_data %>%
+  group_by(Continent) %>%
+  summarise(Population_2022 = sum(X2022.Population),
+            Population_2015 = sum(X2015.Population),
+            Population_2010 = sum(X2010.Population),
+            Population_2000 = sum(X2000.Population))
+
+file_path_continent_pop <- paste0(getwd(), "/Pop_by_continent.csv")
+write.csv(population_by_continent, file = file_path_continent_pop)
+```
+
