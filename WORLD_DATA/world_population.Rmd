@@ -106,14 +106,24 @@ write.csv(total_population_by_continent, file = file_path_continent_pop)
 ```{r}
 time_series_data <- read.csv("world_population_2.csv")
 
-head(time_series_data, n = 10)
-
 population_by_continent <- time_series_data %>%
   group_by(Continent) %>%
   summarise(Population_2022 = sum(X2022.Population),
             Population_2015 = sum(X2015.Population),
             Population_2010 = sum(X2010.Population),
             Population_2000 = sum(X2000.Population))
+
+population_by_continent <- population_by_continent %>% 
+  pivot_longer(!Continent, names_to = "Year", values_to = "Population")
+
+population_by_continent$Year[population_by_continent$Year == "Population_2022"] <- 2022
+population_by_continent$Year[population_by_continent$Year == "Population_2015"] <- 2015
+population_by_continent$Year[population_by_continent$Year == "Population_2010"] <- 2010
+population_by_continent$Year[population_by_continent$Year == "Population_2000"] <- 2000
+population_by_continent$Year = as.numeric(population_by_continent$Year)
+
+
+head(population_by_continent)
 
 file_path_continent_pop <- paste0(getwd(), "/Pop_by_continent.csv")
 write.csv(population_by_continent, file = file_path_continent_pop)
