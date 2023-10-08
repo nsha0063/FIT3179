@@ -1,0 +1,92 @@
+---
+title: "world_population"
+author: "Nathan Shane"
+date: "2023-09-22"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(dplyr)
+world_data<- read.csv("world_population.csv")
+
+world_data <- world_data %>% 
+  rename(population_2020 = Population..2020.,
+         Country = Country.Other,
+         yearly_change = Yearly.Change,
+         net_change = Net.Change,
+         pop_density = Density..P.Km..,
+         land_area = Land.Area..Km..,
+         mig_net = Migrants..net.,
+         fert_rate = Fert..Rate,
+         med_age = Med..Age,
+         urban_pop = Urban.Pop..,
+          world_share = World.Share)  %>%
+   add_row(Country = "Greenland", population_2020 = 56367) %>%
+   add_row( Country = "Somaliland", population_2020 = 16537016)
+
+
+suicide_rate <- read.csv("Suicide rate.csv")
+suicide_rate$Country[suicide_rate$Country == "Democratic Republic of the Congo"] <- "DR Congo"
+suicide_rate$Country[suicide_rate$Country == "Cape Verde"] <- "Cabo Verde"
+suicide_rate$Country[suicide_rate$Country == "Czech Republic"] <- "Czech Republic (Czechia)"
+suicide_rate$Country[suicide_rate$Country == "East Timor"] <- "Timor-Leste"
+suicide_rate$Country[suicide_rate$Country == "Ivory Coast"] <- "Côte d'Ivoire"
+suicide_rate$Country[suicide_rate$Country == "Republic of the Congo"] <- "Congo"
+suicide_rate$Country[suicide_rate$Country == "Saint Vincent and the Grenadines"] <- "St. Vincent & Grenadines"
+suicide_rate$Country[suicide_rate$Country == "The Bahamas"] <- "Bahamas"
+suicide_rate$Country[suicide_rate$Country == "The Gambia"] <- "Gambia"
+  
+GDP <- read.csv("GDP per capita.csv")
+GDP$Country[GDP$Country == "Democratic Republic of the Congo"] <- "DR Congo"
+GDP$Country[GDP$Country == "Cape Verde"] <- "Cabo Verde"
+GDP$Country[GDP$Country == "Czech Republic"] <- "Czech Republic (Czechia)"
+GDP$Country[GDP$Country == "East Timor"] <- "Timor-Leste"
+GDP$Country[GDP$Country == "Ivory Coast"] <- "Côte d'Ivoire"
+GDP$Country[GDP$Country == "Republic of the Congo"] <- "Congo"
+GDP$Country[GDP$Country == "Saint Vincent and the Grenadines"] <- "St. Vincent & Grenadines"
+GDP$Country[GDP$Country == "The Bahamas"] <- "Bahamas"
+GDP$Country[GDP$Country == "The Gambia"] <- "Gambia"
+
+life_expect <- read.csv("Life expectancy.csv")
+life_expect$Country[life_expect$Country == "Democratic Republic of the Congo"] <- "DR Congo"
+life_expect$Country[life_expect$Country == "Cape Verde"] <- "Cabo Verde"
+life_expect$Country[life_expect$Country == "Czech Republic"] <- "Czech Republic (Czechia)"
+life_expect$Country[life_expect$Country == "East Timor"] <- "Timor-Leste"
+life_expect$Country[life_expect$Country == "Ivory Coast"] <- "Côte d'Ivoire"
+life_expect$Country[life_expect$Country == "Republic of the Congo"] <- "Congo"
+life_expect$Country[life_expect$Country == "Saint Vincent and the Grenadines"] <- "St. Vincent & Grenadines"
+life_expect$Country[life_expect$Country == "The Bahamas"] <- "Bahamas"
+life_expect$Country[life_expect$Country == "The Gambia"] <- "Gambia"
+
+
+world_data <- left_join(world_data, suicide_rate, by = "Country")
+world_data <- left_join(world_data, GDP, by = "Country")
+world_data <- left_join(world_data, life_expect, by = "Country")
+
+world_data <- world_data %>% 
+  select(-c(ISO.code.x, ISO.code.y, ISO.code)) %>% 
+  rename(suicide_rate = Suicide.rate,
+         gdp_per_capita = GDP.per.capita,
+         life_expect = Life.expectancy)
+
+world_data$Country[world_data$Country == "United States"] <- "United States of America"
+
+world_data$Country[world_data$Country == "DR Congo"] <- "Dem. Rep. Congo"
+
+world_data$Country[world_data$Country == "South Sudan"] <- "S. Sudan"
+
+world_data$Country[world_data$Country == "Central African Republic"] <- "Central African Rep."
+
+
+library(countrycode)
+
+head(world_data)
+
+world_data <- world_data %>% 
+  mutate(continent = countrycode(world_data$Country, origin = "country.name", destination = "continent"))
+
+
+file_path <- paste0(getwd(), "/CLEAN_WORLD_POPULATION_DATA.csv")
+write.csv(world_data, file = file_path)
+```
