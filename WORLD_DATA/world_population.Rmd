@@ -129,3 +129,19 @@ file_path_continent_pop <- paste0(getwd(), "/Pop_by_continent.csv")
 write.csv(population_by_continent, file = file_path_continent_pop)
 ```
 
+```{r}
+world_pop_data <- read.csv("world_population_2.csv")
+
+world_pop_data$Country.Territory[world_pop_data$Country.Territory == "United States"] <- "United States of America"
+
+world_pop_data$Country.Territory[world_pop_data$Country.Territory == "DR Congo"] <- "Dem. Rep. Congo"
+
+world_pop_data$Country.Territory[world_pop_data$Country.Territory == "South Sudan"] <- "S. Sudan"
+
+world_pop_data$Country.Territory[world_pop_data$Country.Territory == "Central African Republic"] <- "Central African Rep."
+
+file_path_world_pop_diff_year <- paste0(getwd(), "/Pop_by_country_years.csv")
+write.csv(world_pop_data, file = file_path_world_pop_diff_year)
+
+```
+
