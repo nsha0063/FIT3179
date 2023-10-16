@@ -1,0 +1,103 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "title": "Freedom Ratings by Continent",
+    "config": {
+        "background": "beige"
+    },
+    "data": {
+        "url": "data/WORLD_DATA/freedom_data.csv"
+    },
+    "vconcat": [
+        {
+            "width": 450,
+            "height": 300,
+            "mark": {
+                "type": "line",
+                "point": true
+            },
+            "encoding": {
+                "x": {
+                    "field": "Edition",
+                    "type": "ordinal",
+                    "title": "Year"
+                },
+                "y": {
+                    "field": "avg_CL_Rating",
+                    "title": "Average Civil Liberties (CL) Rating",
+                    "type": "quantitative"
+                },
+                "color": {
+                    "field": "continent",
+                    "type": "nominal",
+                    "scale": {
+                        "scheme": "set1"
+                    }
+                },
+                "tooltip": [
+                    {
+                        "field": "continent",
+                        "title": "Continent",
+                        "type": "nominal"
+                    },
+                    {
+                        "field": "avg_CL_Rating",
+                        "title": "CL Rating",
+                        "type": "quantitative",
+                        "format": ".2~s"
+                    },
+                    {
+                        "field": "Edition",
+                        "title": "Year",
+                        "type": "ordinal"
+                    }
+                ]
+            }
+        },
+        {
+            "width": 450,
+            "height": 300,
+            "mark": {
+                "type": "line",
+                "point": true
+            },
+            "encoding": {
+                "x": {
+                    "field": "Edition",
+                    "type": "ordinal",
+                    "title": "Year"
+                },
+                "y": {
+                    "field": "avg_PR_Rating",
+                    "title": "Average Political Rights (PR) Rating",
+                    "type": "quantitative"
+                },
+                "color": {
+                    "field": "continent",
+                    "type": "nominal",
+                    "title": "Continent",
+                    "scale": {
+                        "scheme": "set1"
+                    }
+                },
+                "tooltip": [
+                    {
+                        "field": "continent",
+                        "title": "Continent",
+                        "type": "nominal"
+                    },
+                    {
+                        "field": "avg_PR_Rating",
+                        "title": "PR Rating",
+                        "type": "quantitative",
+                        "format": ".2~s"
+                    },
+                    {
+                        "field": "Edition",
+                        "title": "Year",
+                        "type": "ordinal"
+                    }
+                ]
+            }
+        }
+    ]
+}

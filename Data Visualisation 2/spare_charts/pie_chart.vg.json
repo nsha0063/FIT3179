@@ -1,0 +1,48 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "title": "2022 Population Pie Chart",
+    "width": 700,
+    "height": 500,
+    "data": {
+        "url": "data/WORLD_DATA/CLEAN_WORLD_POPULATION_DATA_NO_NA.csv"
+    },
+    "transform": [
+        {
+            "groupby": [
+                "continent"
+            ],
+            "aggregate": [
+                {
+                    "op": "sum",
+                    "field": "population_2020",
+                    "as": "total_population"
+                }
+            ]
+        }
+    ],
+    "mark": {
+        "type": "arc",
+        "innerRadius": 60,
+        "outerRadius": 110
+    },
+    "encoding": {
+        "theta": {
+            "field": "total_population",
+            "type": "quantitative"
+        },
+        "color": {
+            "field": "continent",
+            "type": "nominal"
+        },
+        "tooltip": [
+            {
+                "field": "continent",
+                "type": "nominal"
+            },
+            {
+                "field": "total_population",
+                "type": "quantitative"
+            }
+        ]
+    }
+}

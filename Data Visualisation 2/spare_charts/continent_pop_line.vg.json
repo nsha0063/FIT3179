@@ -1,0 +1,74 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "title": "Total Population by Continent",
+    "width": 700,
+    "height": 500,
+    "data": {
+        "url": "data/WORLD_DATA/Continent_pop_over_years.csv"
+    },
+    "params": [
+        {
+            "name": "Continent_Selection",
+            "bind": {
+                "input": "select",
+                "options": [
+                    null,
+                    "Africa",
+                    "Asia",
+                    "Europe",
+                    "North America",
+                    "Oceania",
+                    "South America"
+                ],
+                "labels": [
+                    "Show all",
+                    "Africa",
+                    "Asia",
+                    "Europe",
+                    "North America",
+                    "Oceania",
+                    "South America"
+                ],
+                "name": "Continent Selection:"
+            }
+        }
+    ],
+    "transform": [
+        {
+            "filter": "Continent_Selection == null || datum.Continent == Continent_Selection"
+        }
+    ],
+    "mark": {"type": "line", "point": true},
+    "encoding": {
+        "x": {
+            "field": "Year",
+            "type": "ordinal"
+        },
+        "y": {
+            "field": "Total_pop",
+            "title": "Total Population",
+            "type": "quantitative"
+        },
+        "color": {
+            "field": "Continent",
+            "type": "nominal",
+            "scale": {"scheme": "set1"}
+        },
+        "tooltip": [
+            {
+                "field": "Continent",
+                "type": "nominal"
+            },
+            {
+                "field": "Total_pop",
+                "title": "Population",
+                "type": "quantitative",
+                "format": ".4~s"
+            },
+            {
+                "field": "Year",
+                "type": "ordinal"
+            }
+        ]
+    }
+}

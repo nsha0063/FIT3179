@@ -1,0 +1,96 @@
+---
+title: "DV2"
+author: "Nathan Shane"
+date: "2023-09-20"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(dplyr)
+
+suicide_data <- read.csv("master.csv")
+
+suicide_data <- suicide_data %>% 
+  filter(year >= 1993) %>% 
+  rename(suicides_per_100k = suicides.100k.pop) %>% 
+  mutate(age = str_remove(age, " years"),
+         gdp_for_year = as.numeric(gsub(",", "", gdp_for_year....)),
+         gdp_per_capita = gdp_per_capita....) %>% 
+  select(-generation, -country.year, -gdp_for_year...., -gdp_per_capita....)
+
+file_path <- paste0(getwd(), "/clean_suicide_data.csv")
+write.csv(suicide_data, file = file_path)
+```
+
+
+
+
+
+# Total Suicides for Each Country 2010
+
+```{r}
+library(tidyverse)
+library(dplyr)
+
+suicide_data <- read.csv("clean_suicide_data.csv")
+
+suicide_data <- suicide_data %>% 
+  filter(year == 2014,
+        sex == "male",
+        age == "25-34")
+
+file_path <- paste0(getwd(), "/2010_male_25-34_suicide_data.csv")
+write.csv(suicide_data, file = file_path)
+```
+
+
+# Group By Continent
+```{r}
+library(countrycode)
+suicide_data <- read.csv("clean_suicide_data.csv")
+
+north_american_countries <- c(
+  "Canada", "United States", "Mexico", "Antigua and Barbuda", 
+  "Bahamas", "Barbados", "Belize", "Costa Rica", "Cuba", 
+  "Dominica", "Dominican Republic", "El Salvador", "Grenada", 
+  "Guatemala", "Haiti", "Honduras", "Jamaica", "Nicaragua", 
+  "Panama", "Saint Kitts and Nevis", "Saint Lucia", 
+  "Saint Vincent and the Grenadines", "Trinidad and Tobago"
+)
+
+south_american_countries <- c(
+  "Argentina", "Bolivia", "Brazil", "Chile", "Colombia", 
+  "Ecuador", "Guyana", "Paraguay", "Peru", "Suriname", 
+  "Uruguay", "Venezuela"
+)
+
+head(suicide_data)
+
+suicide_data <- suicide_data %>% 
+  mutate(continent = countrycode(suicide_data$country, origin = "country.name", destination = "continent"))
+
+suicide_data <- suicide_data %>% 
+          mutate( continent = ifelse(continent == "Americas" & country %in% north_american_countries, "North America", continent),
+         continent = ifelse(continent == "Americas" & country %in% south_american_countries, "South America", continent))
+
+suicide_data <- suicide_data %>% mutate(continent = ifelse(continent == "Americas", NA, continent))
+
+groupped_data <- suicide_data %>%
+  group_by(continent, year, age) %>%
+  summarise(avg_suicides = mean(suicides_per_100k))
+
+groupped_data <- na.omit(groupped_data)
+
+groupped_data <- groupped_data %>% 
+  filter(age %in% c("5-14","15-24", "25-34", "35-54")) %>% 
+  filter(year > 2000) %>% arrange(factor(age, levels = c("5-14", "15-24", "25-34", "35-54")))
+
+head(groupped_data)
+
+file_path <- paste0(getwd(), "/continent_suicide_data.csv")
+write.csv(groupped_data, file = file_path)
+
+```
+
+

@@ -1,0 +1,54 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "width": 550,
+    "height": 400,
+    "config": {"background": "beige"},
+    "data": {
+        "url": "data/WORLD_DATA/Continent_pop_over_years.csv"
+    },
+    "mark": {
+        "type": "arc",
+        "innerRadius": 80,
+        "outerRadius": 150
+    },
+    "params": [{
+        "name": "Year_Selection",
+        "bind": {
+            "input": "select",
+            "options": [null, "1990", "2000", "2010", "2015", "2022"],
+            "labels": ["Show All", "1990", "2000", "2010", "2015", "2022"],
+            "name": "Year Selection: "
+        }
+    }],
+    "transform": [{
+        "filter": "Year_Selection == null || datum.Year == Year_Selection"}],
+    "encoding": {
+        "theta": {
+            "field": "Total_pop",
+            "type": "quantitative"
+        },
+        "color": {
+            "field": "Continent",
+            "type": "nominal",
+            "scale": {
+                "scheme": "set1"
+            }
+        },
+        "tooltip": [
+            {
+                "field": "Continent",
+                "type": "nominal"
+            },
+            {
+                "field": "Total_pop",
+                "title": "Population",
+                "type": "quantitative",
+                "format": ".2s"
+            },
+            {
+                "field": "Year",
+                "type": "nominal"
+            }
+        ]
+    }
+}

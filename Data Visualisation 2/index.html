@@ -1,0 +1,203 @@
+<html>
+
+<head>
+  <title>World Population Statistics</title>
+  <!-- Import Vega & Vega-Lite (does not have to be from CDN) -->
+  <script src="https://cdn.jsdelivr.net/npm/vega@5.20.2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.1.0"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.17.0"></script>
+
+  <!-- Import pure.css -->
+  <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.3/build/pure-min.css"
+    integrity="sha384-cg6SkqEOCV1NbJoCu11+bm0NvBRc8IYLRGXkmNrqUBfTjmMYwNKPWBTIKyw9mHNJ" crossorigin="anonymous">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Google font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+
+  <!-- CSS file -->
+  <link rel="stylesheet" type="text/css" href="css/styles.css" media="all">
+
+  <style>
+    body {
+      background-color: beige;
+    }
+  </style>
+
+</head>
+
+<body>
+
+
+  <div class="page" style="background-color: beige">
+
+    <!-- pure grid group -->
+    <div class="pure-g" style="background-color: beige">
+      <div class="pure-u-1-1">
+        <div class="description-mid" style="text-align: center; padding-top: 30px;">
+          <h1> World Population Statistics</h1>
+        </div>
+      </div>
+    </div class="pure-u-1-1">
+    <div class="description-mid" style="text-align: center; padding-top: 10px; background-color: beige;">
+      <p></p>
+    </div>
+  </div>
+
+  <!-- end pure grid group -->
+
+  <!-- pure grid group -->
+  <div class="pure-g" style="background-color: beige;">
+    <div class="pure-u-1-3">
+      <div class="description description-right" style="padding-left: 250px;">
+        <h3>Population Density Map</h3>
+        <p>Population Density is a measurement of the population per unit of land area, in this case, the amount of
+          people per square km for each country.</p>
+        <h4>Australia's Population Density</h4>
+        <p>From the map, Australia is seen to only have a population density of 3 ppl/sq km, despite having a population
+          of around 25 million people, due to the large land area of around 8 million sq km.</p>
+        <h4>Countries with highest Population Density</h4>
+        <p>The countries with the highest population densities include Bangladesh, South Korea, Netherlands and India
+          whilst the countries
+          with the lowest population densities include Australia, Iceland, Mongolia and Canada.</p>
+      </div>
+    </div>
+    <div class="pure-u-2-3">
+      <div id="pop_den" class="vis-container" style="margin-left: 60px;"></div>
+    </div>
+  </div>
+  <!-- end pure grid group -->
+
+  <!-- pure grid group -->
+  <div class="pure-g">
+    <div class="pure-u-1-3" style="padding-left: 250px;">
+      <div id="freedom_line" class="vis-container"></div>
+    </div>
+    <div class="pure-u-1-3">
+      <div class="description-right">
+        <h3>Freedom Ratings Chart</h3>
+        <p>Freedom ratings track the quality of political rights and civil liberties for each country from the past
+          decade. They are comproised of two main rankings,
+          <b>Civil Liberties and Political Rights</b>. The Civil Liberties (CL) rating is comproised of 15 civil
+          liberties indicators and the Political Rights (PR) rating is comproised of
+          10 poltical rights indicators, with the lower rankings indicating a better overall freedom ranking. In the
+          chart, the average CL and PR ratings for each continent are shown for comparison between different continents.
+        </p>
+
+        <h4>Oceania and Europe  </h4>
+        <p>Both the Oceania and Europe continents have had relatively high rankings in freedom ratings that remained
+          consistent over the years 2013 till 2022.
+          For Oceania during the year 2013, PR Ranking was lower than Europe, however, over the course of the following
+          2-4 years, the PR Rating improved to overtake Europe's ranking. </p>
+
+        <h4>Africa and Asia  </h4>
+        <p>Africa and Asia both have had relatively low rankings when it comes to CL/PR ratings and have consistently
+          remained low during the past decade. This could be due to the <b>combination
+          of corruption and poor governance within Africa</b> and many <b>civil society organisations being forced to disband or
+          relocate throughout Asia </b>over the years.
+        </p>
+
+        <h4>North America and South America  </h4>
+        <p>
+          Both North America and South America have remained consistently high in PR/CL rankings during the past decade with the average rankings of around 2-3 in both
+          ratings.
+        </p>
+      </div>
+    </div>
+  </div>
+  <!-- end pure grid group -->
+
+  <!-- pure grid group -->
+  <div class="pure-g">
+    <div class="pure-u-1-3" style="padding-left: 250px;">
+      <div class="description-left">
+        <h3>Total Population Breakdown</h3>
+      </div>
+    </div>
+    <div class="pure-u-1-3" style="margin-left: 80px;">
+      <div class="description-right">
+        <h3> Average Suicide Rate Breakdown</h3>
+      </div>
+    </div>
+  </div>
+  <!-- end pure grid group -->
+
+  <!-- pure grid group -->
+  <div class="pure-g">
+    <div class="pure-u-1-3" style="padding-left: 250px;">
+      <div id="con_pie" class="vis-container"></div>
+    </div>
+    <div class="pure-u-1-3" style="margin-left: 80px;">
+      <div id="sui_stack" class="vis-container"></div>
+    </div>
+  </div>
+  <!-- end pure grid group -->
+
+  <!-- pure grid group -->
+  <div class="pure-g">
+    <div class="pure-u-1-3">
+      <div class="description description-left" style="padding-left: 250px;">
+        <h3>Life Expectancy and GDP per Captia</h3>
+        <h4> Life Expectancy</h4>
+        <p>Life Expectancy is used as a measurement of the health of a country and estimates the number of years a newborn baby is expected to live. 
+          It takes into account current death rates and age as well as other factors and probabilities to determine the average age a person when they die.
+        </p>
+        <h4> GDP per Capita</h4>
+        <p>GPD per capita is calculated by dividing the total GPD of a country by its total population to give a measurement of a country's economic production per person.
+          It is seen as a global measure for the wealth of a nation's people and provides an insight to the average living standards for each person of a country.
+        </p>
+        <h4> Life Expectancy and GDP per Capita</h4>
+        <p>By examining the Life Expectancy and GPD per Capita simultaneously, the overall economic and health of people can be examined along with the quality of life, whilst also considering the
+          average income per person. Looking at these simultaneously gives an insight to the economic prosperity and general health of each country. 
+        </p>
+      </div>
+    </div>
+    <div class="pure-u-2-3">
+      <div id="life_bubble" class="vis-container" style="padding-top: 50px; margin-left: 80px;"></div>
+    </div>
+
+  </div>
+  <!-- end pure grid group -->
+
+
+  <div class="pure-g">
+    <div class="pure-u-1-1 small-font" style="padding-left: 250px; padding-top: 50px;">
+      <p>This visualisation is created by Nathan Shane. The datasource is <a href="#" target=" _blank">some data
+          repository online</href>.</p>
+    </div>
+  </div>
+
+
+  </div> <!-- end page -->
+
+  <script type="text/javascript">
+    var specVis1 = "pop_den_map.json";
+    var specVis2 = "life_exp_GDP_bubble.json";
+    var specVis3 = "sui_rate_stack_bar.json";
+    var specVis4 = "freedom_line.json";
+    var specVis5 = "continent_pie.json";
+
+    vegaEmbed('#pop_den', specVis1, { "actions": false });
+
+    vegaEmbed('#life_bubble', specVis2, { "actions": false }).then(function (result) {
+      // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+    }).catch(console.error);
+
+    vegaEmbed('#sui_stack', specVis3, { "actions": false }).then(function (result) {
+      // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+    }).catch(console.error);
+
+    vegaEmbed('#freedom_line', specVis4, { "actions": false }).then(function (result) {
+      // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+    }).catch(console.error);
+    vegaEmbed('#con_pie', specVis5, { "actions": false }).then(function (result) {
+      // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+    }).catch(console.error);
+
+  </script>
+
+</body>
+
+</html>

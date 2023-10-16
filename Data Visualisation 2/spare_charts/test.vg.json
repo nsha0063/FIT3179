@@ -1,0 +1,71 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "title": "Population Donut Chart",
+    "width": 700,
+    "height": 500,
+    "data": {
+        "url": "data/WORLD_DATA/CLEAN_WORLD_POPULATION_DATA_NO_NA.csv"
+    },
+    "transform": [
+        {
+            "calculate": "datum.continent + ' - ' + datum.Country",
+            "as": "region"
+        },
+        {
+            "groupby": ["region"],
+            "aggregate": [
+                {
+                    "op": "sum",
+                    "field": "population_2020",
+                    "as": "total_population"
+                }
+            ]
+        }
+    ],
+    "layer": [
+        {
+            "mark": {
+                "type": "arc",
+                "innerRadius": 60,
+                "outerRadius": 100
+            },
+            "encoding": {
+                "theta": {
+                    "field": "total_population",
+                    "type": "quantitative"
+                },
+                "color": {
+                    "field": "region",
+                    "type": "nominal",
+                    "scale": {"scheme": "category20b"} 
+                },
+                "tooltip": [
+                    {"field": "region", "type": "nominal"},
+                    {"field": "total_population", "type": "quantitative"}
+                ]
+            }
+        },
+        {
+            "mark": {
+                "type": "arc",
+                "innerRadius": 120,
+                "outerRadius": 140
+            },
+            "encoding": {
+                "theta": {
+                    "field": "total_population",
+                    "type": "quantitative"
+                },
+                "color": {
+                    "field": "region",
+                    "type": "nominal",
+                    "scale": {"scheme": "category20b"} 
+                },
+                "tooltip": [
+                    {"field": "region", "type": "nominal"},
+                    {"field": "total_population", "type": "quantitative"}
+                ]
+            }
+        }
+    ]
+}
