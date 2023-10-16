@@ -1,0 +1,120 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "width": 700,
+    "height": 450,
+    "config": {"background": "beige"},
+    "title": "GDP per Capita vs Life Expectancy",
+    "data": {
+        "url": "https://raw.githubusercontent.com/nsha0063/FIT3179/main/data/WORLD_DATA/CLEAN_WORLD_POPULATION_DATA_NO_NA.csv"
+    },
+    "params": [
+        {
+            "name": "Continent_selection",
+            "bind": {
+                "input": "select",
+                "options": [
+                    null,
+                    "North America",
+                    "South America",
+                    "Europe",
+                    "Africa",
+                    "Asia",
+                    "Oceania"
+                ],
+                "labels": [
+                    "Show All",
+                    "North America",
+                    "South America",
+                    "Europe",
+                    "Africa",
+                    "Asia",
+                    "Oceania"
+                ],
+                "name": "Continent Selection: "
+            }
+        }
+    ],
+    "mark": "circle",
+    "transform": [{
+        "filter": "Continent_selection == null || datum.continent == Continent_selection"}],
+    "encoding": {
+        "x": {
+            "field": "gdp_per_capita",
+            "type": "quantitative",
+            "title": "GDP per Capita (USD$)",
+            "scale": {
+                "type": "linear"
+            },
+            "axis": {
+                "tickCount": 5
+            }
+        },
+        "y": {
+            "field": "life_expect",
+            "type": "quantitative",
+            "title": "Life Expectancy",
+            "scale": {"domain": [50,90]
+            },
+            "axis": {
+                "tickCount": 5
+            }
+        },
+        "color": {
+            "field": "continent",
+            "type": "nominal",
+            "title": "Continent",
+            "scale": {"scheme": "set1"}
+        },
+        "opacity": { "value": 0.75},
+        "size": {
+            "field": "population_2020",
+            "type": "quantitative",
+            "title": "Population",
+            "scale": {
+                "type": "threshold",
+                "domain": [
+                    10000000,
+                    50000000,
+                    250000000,
+                    750000000
+                ],
+                "range": [
+                    50,
+                    150,
+                    300,
+                    450,
+                    600
+                    
+                ]
+                
+            },
+            "legend": {
+                "format": ".4s"
+            }
+        },
+        "tooltip": [
+            {
+                "field": "Country",
+                "type": "nominal"
+            },
+            {
+                "field": "life_expect",
+                "type": "quantitative",
+                "title": "Life Expectancy",
+                "format": ","
+            },
+            {
+                "field": "gdp_per_capita",
+                "type": "quantitative",
+                "title": "GDP Per Capita",
+                "format": ".4s"
+            },
+            {
+                "field": "population_2020",
+                "type": "quantitative",
+                "title": "Population",
+                "format": ".4s"
+            }
+        ]
+    }
+}
