@@ -1,7 +1,6 @@
 {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-    "width": 550,
-    "height": 400,
+    "width": "container",
     "config": {"background": "beige"},
     "data": {
         "url": "https://raw.githubusercontent.com/nsha0063/FIT3179/main/data/WORLD_DATA/Continent_pop_over_years.csv"

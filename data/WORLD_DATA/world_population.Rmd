@@ -298,7 +298,7 @@ gapminder_data <- gapminder_data %>%
 
 gapminder_data$country[gapminder_data$country == "United States"] <- "United States of America"
 
-gapminder_data$country[gapminder_data$country == "DR Congo"] <- "Dem. Rep. Congo"
+gapminder_data$country[gapminder_data$country == "Congo, Dem. Rep."] <- "Dem. Rep. Congo"
 
 gapminder_data$country[gapminder_data$country == "South Sudan"] <- "S. Sudan"
 

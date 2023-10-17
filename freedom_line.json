@@ -9,8 +9,7 @@
     },
     "vconcat": [
         {
-            "width": 450,
-            "height": 300,
+            "width": "container",
             "mark": {
                 "type": "line",
                 "point": true
@@ -54,8 +53,7 @@
             }
         },
         {
-            "width": 450,
-            "height": 300,
+            "width": "container",
             "mark": {
                 "type": "line",
                 "point": true

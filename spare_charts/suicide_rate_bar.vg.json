@@ -1,0 +1,53 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "width": 700,
+    "height": 500,
+    "title": "Suicide Rate Bar Chart",
+    "data": {
+        "url": "data/WORLD_DATA/CLEAN_WORLD_POPULATION_DATA_NO_NA.csv"
+    },
+    "mark": "bar",
+    "encoding": {
+        "x": {
+            "field": "continent",
+            "type": "nominal",
+            "title": "Continent"
+        },
+        "y": {
+            "field": "average_suicide_rate",
+            "type": "quantitative",
+            "title": "Average Suicides per 100,000"
+        },
+        "color": {
+            "field": "continent",
+            "type": "nominal"
+        },
+        "tooltip": [
+            {
+                "field": "continent",
+                "type": "nominal",
+                "title": "Continent"
+            },
+            {
+                "field": "average_suicide_rate",
+                "title": "Average Suicide Rate",
+                "type": "quantitative",
+                "format": ".2~s"
+            }
+        ]
+    },
+    "transform": [
+        {
+            "groupby": [
+                "continent"
+            ],
+            "aggregate": [
+                {
+                    "op": "average",
+                    "field": "suicide_rate",
+                    "as": "average_suicide_rate"
+                }
+            ]
+        }
+    ]
+}
